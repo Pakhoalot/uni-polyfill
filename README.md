@@ -32,6 +32,15 @@
 2. 将 src 作为项目根目录导入到 HBuilderX
 3. 开始和原来一摸一样的编程体验, 你将得到: 统一的缩进和换行符, 你将失去, 统一的 lint 和格式化, 命令行调用.
 
+## changelog
+
+添加了两个依赖分析脚本
+
+```bash
+analyz:mp-weixin   // 对mp-weixin项目进行依赖分析
+analyz:h5          // 对h5项目进行依赖分析
+```
+
 ## 目的
 
 本次工程的构建目的主要有:
@@ -61,7 +70,7 @@
 └─pages.json            配置页面路由、导航条、选项卡等页面类信息，详见
 ```
 
-另一种方式 ② 是通过 ```vue create``` 模板创建, 创建的目录如下
+另一种方式 ② 是通过 `vue create` 模板创建, 创建的目录如下
 
 ```bash
 ┌── node_modules
@@ -136,11 +145,11 @@ insert_final_newline = true
 
 ```javascript
 module.exports = {
-  semi: true,    //末尾分号
-  singleQuote: false,   //使用双引号代替单引号
-  printWidth: 80,    //最长行宽
-  trailingComma: "es5",  //未随逗号
-  arrowParens: "always",   //箭头函数强制使用括号
+  semi: true, //末尾分号
+  singleQuote: false, //使用双引号代替单引号
+  printWidth: 80, //最长行宽
+  trailingComma: "es5", //未随逗号
+  arrowParens: "always", //箭头函数强制使用括号
 };
 ```
 
@@ -152,11 +161,7 @@ module.exports = {
   env: {
     node: true,
   },
-  extends: [
-    "plugin:vue/essential",
-    "eslint:recommended",
-    "@vue/prettier"
-  ],
+  extends: ["plugin:vue/essential", "eslint:recommended", "@vue/prettier"],
   parserOptions: {
     parser: "babel-eslint",
   },
@@ -277,13 +282,13 @@ module.exports = {
       "/cros": {
         target: "http://abcd.com",
         pathReWrite: { "^cors": "" },
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};
 ```
 
-这个设置可以将前端对 ```localhost:8080/cors``` 的部分请求, 通过这个 8080 的服务器代理到真正的```http://abcd.com```服务器上. 这样就可以绕过跨域的问题.
+这个设置可以将前端对 `localhost:8080/cors` 的部分请求, 通过这个 8080 的服务器代理到真正的`http://abcd.com`服务器上. 这样就可以绕过跨域的问题.
 
 开发小程序版本, 真正的目录位于/dist/unpackage/wp-XXX/下, 将这个目录作为项目根目录导入到相关小程序开发工具可解.
 

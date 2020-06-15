@@ -38,7 +38,9 @@
     "test:h5": "cross-env UNI_PLATFORM=h5 jest -i",
     "test:ios": "cross-env UNI_PLATFORM=app-plus UNI_OS_NAME=ios jest -i",
     "test:mp-baidu": "cross-env UNI_PLATFORM=mp-baidu jest -i",
-    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i"
+    "test:mp-weixin": "cross-env UNI_PLATFORM=mp-weixin jest -i",
+    "analyz:mp-weixin": "cross-env NODE_ENV=production UNI_PLATFORM=mp-weixin vue-cli-service uni-build; webpack-bundle-analyzer --port 8888 ./dist/build/.analyzer/mp-weixin-stats.json",
+    "analyz:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build; webpack-bundle-analyzer --port 8888 ./dist/build/.analyzer/h5-stats.json"
   },
   "dependencies": {
     "@dcloudio/uni-app-plus": "^2.0.0-27920200527001",
@@ -87,13 +89,42 @@
     "postcss-comment": "^2.0.0",
     "prettier": "^1.19.1",
     "sass-loader": "^8.0.2",
-    "vue-template-compiler": "^2.6.11"
+    "vue-template-compiler": "^2.6.11",
+    "webpack-bundle-analyzer": "^3.8.0"
   },
   "browserslist": [
     "Android >= 4",
     "ios >= 8"
   ],
   "uni-app": {
-    "scripts": {}
+    "scripts": {
+      "mp-weixin-txvideo": {
+        "title": "微信小程序腾讯视频插件版",
+        "env": {
+          "UNI_PLATFORM": "mp-weixin"
+        },
+        "define": {
+          "MP-WEIXIN-TXVIDEO": true
+        }
+      },
+      "mp-weixin-live": {
+        "title": "微信小程序直播插件版",
+        "env": {
+          "UNI_PLATFORM": "mp-weixin"
+        },
+        "define": {
+          "MP-WEIXIN-LIVE": true
+        }
+      },
+      "mp-weixin-all-plugin": {
+        "title": "微信小程序所有插件版",
+        "env": {
+          "UNI_PLATFORM": "mp-weixin"
+        },
+        "define": {
+          "MP-WEIXIN-ALL-PLUGIN": true
+        }
+      }
+    }
   }
 }
