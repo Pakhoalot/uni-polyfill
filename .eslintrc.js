@@ -14,6 +14,12 @@ module.exports = {
     "no-unreachable": "off",
     "no-unused-vars": "off",
     "no-empty": "off",
+    "no-extra-boolean-cast": "off",
+    "prettier/prettier": "off",
+    "vue/no-use-v-if-with-v-for": "warn",
+    "vue/no-unused-components": "warn",
+    "no-self-assign": "warn",
+    "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }]
   },
   globals: {
     uni: "readonly",

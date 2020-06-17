@@ -34,6 +34,26 @@
 
 ## changelog
 
+2020 06 17
+添加 eslint rules
+
+```json
+    "no-extra-boolean-cast": "off",    // 允许使用!!转换
+    "prettier/prettier": "off",        // 暂时::  暂停使用eslint-prettier, 因为团队中有使用tab进行换行, 而配置是space, 观感很不好
+    "vue/no-use-v-if-with-v-for": "warn",  // 项目中大量v-if v-for 混用, 这部分从error等级降到warn
+    "vue/no-unused-components": "warn",    // 暂时:: 项目中大量未使用的component声明, 从error等级降到warn
+    "no-self-assign": "warn",             // 暂时:: 项目中有少量自赋值的操作, 原因不明, 从error等级降到warn
+    "vue/no-parsing-error": [2, { "x-invalid-end-tag": false }]  // 允许使用end tag<input></input> 代替 单标签<input />
+```
+
+添加.eslintignore, 将不对这部分文件夹进行 lint 操作
+
+```text
+src/libs/
+src/components/jyf-parser/
+```
+
+2020 06 16
 添加了两个依赖分析脚本
 
 ```bash
@@ -293,3 +313,11 @@ module.exports = {
 开发小程序版本, 真正的目录位于/dist/dev/wp-XXX/下, 将这个目录作为项目根目录导入到相关小程序开发工具可解.
 
 HB 的发布操作应该是用 C++写的, 自然没有对应的脚本.
+
+在 2020 06 17 的提交中, 添加了一个"x-invalid-end-tag"规则, 用于允许如`<input />`写成`<input></input>`, 但是在 vetur 中, 还是会使用内置的 eslint-plugin-vue 来对.vue 文件进行 lint. 所以有必要屏蔽这部分规则. 需要在.vscode/settings.json 添加
+
+```json
+"vetur.validation.template": false
+```
+
+来屏蔽掉 vetur 的模板 lint 行为.
