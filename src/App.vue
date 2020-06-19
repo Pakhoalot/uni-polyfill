@@ -1,9 +1,5 @@
 <script>
-  <h1>hello uniapp!</h1>
-</script>
+import "./uni-polyfill";
 
-<style>
-h1 {
-  color: green;
-}
-</style>
+export default {};
+</script>
