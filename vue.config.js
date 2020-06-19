@@ -26,6 +26,12 @@ module.exports = {
       disableHostCheck: true,
     },
     plugins: extraPlugins,
+    resolve: {
+      // 为了引入uniapp内置的promisify, 只能通过引用改写uni-shared引用到uni-h5/src目录下的shared了
+      alias: {
+        "uni-shared": "@dcloudio/uni-h5/src/shared"
+      }
+    },
   },
   lintOnSave: false,
 };

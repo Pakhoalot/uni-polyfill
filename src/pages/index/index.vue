@@ -21,12 +21,13 @@ export default {
       });
     },
     setClipboardData() {
-      uni.setClipboardData({
-        data: "https://i.fkw.com/",
-        success() {
-          console.log("setClipboardData: success");
-        },
-      });
+      uni
+        .setClipboardData({
+        })
+        .then(([err, data]) => {
+          if (err) console.log(err);
+          else console.log("setClipboardData: success");
+        });
     },
   },
 };

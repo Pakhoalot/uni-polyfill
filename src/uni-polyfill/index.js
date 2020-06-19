@@ -1,4 +1,3 @@
-
 /**
  * h5 部分uni接口实现
  * 约定:
@@ -20,7 +19,7 @@
  */
 import wx from "./libs/js-sdk";
 import copy from "./libs/h5-copy";
-// import { promisify } from "@dcloudio/uni-h5/src/core/helpers/promise";
+import { promisify } from "@dcloudio/uni-h5/src/core/helpers/promise";
 
 import { nonceStr, timestamp, signature } from "../mock";
 console.log(wx);
@@ -30,21 +29,18 @@ wx.config({
   appId: "wx073dfc91d230b984", // 必填，公众号的唯一标识
   timestamp, // 必填，生成签名的时间戳
   nonceStr, // 必填，生成签名的随机串
-  signature,// 必填，签名
-  jsApiList: [
-    "checkJsApi",
-    "scanQRCode",
-  ] // 必填，需要使用的JS接口列表
-})
+  signature, // 必填，签名
+  jsApiList: ["checkJsApi", "scanQRCode"], // 必填，需要使用的JS接口列表
+});
 
 wx.ready(() => {
   wx.checkJsApi({
-    jsApiList: ['scanQRCode'], // 需要检测的JS接口列表，所有JS接口列表见附录2,
+    jsApiList: ["scanQRCode"], // 需要检测的JS接口列表，所有JS接口列表见附录2,
     success: function(res) {
       console.log(res);
-    }
+    },
   });
-})
+});
 
 function openSettting(options) {}
 
@@ -66,11 +62,11 @@ function login(options) {
     code: "abcdefg123456",
   };
 
-  if(options) {
+  if (options) {
     const { success, fail } = options;
     setTimeout(() => {
       success(result);
-    })
+    });
     return;
   }
 
@@ -85,14 +81,28 @@ uni.login = login;
  *
  *
  */
-uni.scanCode = wx.scanQRCode;
+const scanCode = wx.scanQRCode;
 /**
  * setClipBoardData implementation
  * https://uniapp.dcloud.io/api/system/clipboard?id=setclipboarddata
  */
 function setClipboardData({ data, success, fail, complete }) {
-  if(typeof data !== "string") throw Error(`data should be a string instead of ${typeof data}.`);
-
-
+  if (typeof data !== "string") {
+    fail(new Error(`options: { data } should be a string instead of ${typeof data}.`));
+    return;
+  }
+  success(null);
 }
-// uni.setClipboardData = promisify(setClipboardData);
+
+const polyfill = {
+  scanCode: scanCode,
+  setClipboardData: setClipboardData,
+};
+
+for (const method in polyfill) {
+  Object.defineProperty(uni, method, {
+    value: promisify(method, polyfill[method]),
+    writable: false,
+    configurable: false,
+  });
+}
