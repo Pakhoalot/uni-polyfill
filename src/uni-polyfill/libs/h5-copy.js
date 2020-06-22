@@ -15,6 +15,11 @@ export default function h5Copy(content) {
   document.body.appendChild(textarea);
   textarea.select(); // 选择对象
   textarea.setSelectionRange(0, content.length); //核心
+  /**
+   * document.execCommand might by Obsolete, check
+   *
+   * https://developer.mozilla.org/en-US/docs/Web/API/Document/execCommand
+   */
   let result = document.execCommand("copy"); // 执行浏览器复制命令
   textarea.remove();
   return result;

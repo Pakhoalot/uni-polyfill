@@ -18,8 +18,10 @@
  *
  */
 import wx from "./libs/js-sdk";
-import copy from "./libs/h5-copy";
 import { promisify } from "@dcloudio/uni-h5/src/core/helpers/promise";
+import getSetting from "./api/getSetting";
+import openSetting from "./api/openSetting";
+import setClipboardData from "./api/setClipboardData";
 
 import { nonceStr, timestamp, signature } from "../mock";
 console.log(wx);
@@ -42,11 +44,13 @@ wx.ready(() => {
   });
 });
 
-function openSettting(options) {}
 
-function getSetting(options) {}
-
-function navigateToMiniProgram(options) {}
+function navigateToMiniProgram({ fail }) {
+  if (!process.env.NODE_ENV === "production")
+    console.log(
+      `uni.navigateToMiniProgram 跳转到小程序在h5上未实现, 本实现只是空实现, 避免报错.`
+    );
+}
 
 /**
  * 在小程序中调用该接口获取登录凭证(code), 然后需要通过去后台换取openId,
@@ -82,21 +86,13 @@ uni.login = login;
  *
  */
 const scanCode = wx.scanQRCode;
-/**
- * setClipBoardData implementation
- * https://uniapp.dcloud.io/api/system/clipboard?id=setclipboarddata
- */
-function setClipboardData({ data, success, fail, complete }) {
-  if (typeof data !== "string") {
-    fail(new Error(`options: { data } should be a string instead of ${typeof data}.`));
-    return;
-  }
-  success(null);
-}
 
 const polyfill = {
-  scanCode: scanCode,
-  setClipboardData: setClipboardData,
+  scanCode,
+  setClipboardData,
+  getSetting,
+  openSetting,
+  navigateToMiniProgram,
 };
 
 for (const method in polyfill) {

@@ -13,6 +13,7 @@
     "build:app-plus": "cross-env NODE_ENV=production UNI_PLATFORM=app-plus vue-cli-service uni-build",
     "build:custom": "cross-env NODE_ENV=production uniapp-cli custom",
     "build:h5": "cross-env NODE_ENV=production UNI_PLATFORM=h5 vue-cli-service uni-build",
+    "build:h5-weixin": "yarn build:custom h5-weixin",
     "build:mp-360": "cross-env NODE_ENV=production UNI_PLATFORM=mp-360 vue-cli-service uni-build",
     "build:mp-alipay": "cross-env NODE_ENV=production UNI_PLATFORM=mp-alipay vue-cli-service uni-build",
     "build:mp-baidu": "cross-env NODE_ENV=production UNI_PLATFORM=mp-baidu vue-cli-service uni-build",
@@ -24,7 +25,7 @@
     "dev:app-plus": "cross-env NODE_ENV=development UNI_PLATFORM=app-plus vue-cli-service uni-build --watch",
     "dev:custom": "cross-env NODE_ENV=development uniapp-cli custom",
     "dev:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-serve",
-    "dev-net:h5": "cross-env NODE_ENV=development UNI_PLATFORM=h5 vue-cli-service uni-build --watch",
+    "dev:h5-weixin": "yarn dev:custom h5-weixin",
     "dev:mp-360": "cross-env NODE_ENV=development UNI_PLATFORM=mp-360 vue-cli-service uni-build --watch",
     "dev:mp-alipay": "cross-env NODE_ENV=development UNI_PLATFORM=mp-alipay vue-cli-service uni-build --watch",
     "dev:mp-baidu": "cross-env NODE_ENV=development UNI_PLATFORM=mp-baidu vue-cli-service uni-build --watch",
@@ -80,6 +81,7 @@
     "babel-eslint": "^10.1.0",
     "babel-plugin-import": "^1.11.0",
     "cross-env": "^7.0.2",
+    "crypto-js": "^4.0.0",
     "eslint": "^6.7.2",
     "eslint-plugin-prettier": "^3.1.3",
     "eslint-plugin-vue": "^6.2.2",
@@ -124,6 +126,16 @@
         },
         "define": {
           "MP-WEIXIN-ALL-PLUGIN": true
+        }
+      },
+      "h5-weixin": {
+        "title": "微信服务号",
+        "BROWSER": "Chrome",
+        "env": {
+          "UNI_PLATFORM": "h5"
+        },
+        "define": {
+          "H5-WEIXIN": true
         }
       }
     }

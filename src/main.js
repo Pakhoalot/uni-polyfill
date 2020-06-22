@@ -1,6 +1,6 @@
+import "./uni-polyfill";
 import Vue from "vue";
 import App from "./App";
-
 Vue.config.productionTip = false;
 Vue.config.devTools = process.env.NODE_ENV !== "production";
 

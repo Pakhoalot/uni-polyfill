@@ -81,10 +81,10 @@
   },
   "h5": {
     "title": "轻站小程序",
-    "domain": "https://i.qz.fkw.com/",
+    "template": "/public/index.jsp",
     "router": {
       "base": ""
     },
-    "publicPath": "http://qz.aaadns.com.pakholeung.dev.cc/js/h5"
+    "publicPath": "http://edu.aaadns.com/h5"
   }
 }

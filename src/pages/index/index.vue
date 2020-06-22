@@ -23,10 +23,11 @@ export default {
     setClipboardData() {
       uni
         .setClipboardData({
+          data: "abcde"
         })
         .then(([err, data]) => {
           if (err) console.log(err);
-          else console.log("setClipboardData: success");
+          else console.log("setClipboardData: success", data);
         });
     },
   },
