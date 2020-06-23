@@ -19,9 +19,15 @@
  */
 import wx from "./libs/js-sdk";
 import { promisify } from "@dcloudio/uni-h5/src/core/helpers/promise";
+import login from "./api/login";
 import getSetting from "./api/getSetting";
 import openSetting from "./api/openSetting";
 import setClipboardData from "./api/setClipboardData";
+import getClipboardData from "./api/getClipboardData";
+import openDocument from "./api/openDocument";
+import saveImageToPhotosAlbum from "./api/saveImageToPhotosAlbum";
+import { voidImplementation } from "./msg";
+import { warn } from "./logger";
 
 import { nonceStr, timestamp, signature } from "../mock";
 console.log(wx);
@@ -45,59 +51,33 @@ wx.ready(() => {
 });
 
 
-function navigateToMiniProgram({ fail }) {
-  if (!process.env.NODE_ENV === "production")
-    console.log(
-      `uni.navigateToMiniProgram 跳转到小程序在h5上未实现, 本实现只是空实现, 避免报错.`
-    );
+function navigateToMiniProgram() {
+  warn(voidImplementation("navigateToMiniProgram"));
 }
 
-/**
- * 在小程序中调用该接口获取登录凭证(code), 然后需要通过去后台换取openId,
- * 我们的服务器存储了openId和UserInfo的对应值, 作为缓存, 所以在换取的时候,
- * 必须保证code的值的唯一的, 这样才能换到唯一的openId.
- *
- *
- * @param {*} options
- * @returns
- */
-function login(options) {
-  const result = {
-    code: "abcdefg123456",
-  };
-
-  if (options) {
-    const { success, fail } = options;
-    setTimeout(() => {
-      success(result);
-    });
-    return;
-  }
-
-  return new Promise((res, rej) => {
-    // 直接resolve一个code, 因为在h5端, 根本不可能失败
-    res([null, result]);
-  });
-}
-
-uni.login = login;
 /**
  *
  *
  */
 const scanCode = wx.scanQRCode;
 
-const polyfill = {
+const potocol = {
   scanCode,
   setClipboardData,
+  getClipboardData,
   getSetting,
   openSetting,
   navigateToMiniProgram,
+  openDocument,
+  saveImageToPhotosAlbum,
+  login,
+  getUserInfo,
+  authorize
 };
 
-for (const method in polyfill) {
+for (const method in potocol) {
   Object.defineProperty(uni, method, {
-    value: promisify(method, polyfill[method]),
+    value: promisify(method, potocol[method]),
     writable: false,
     configurable: false,
   });

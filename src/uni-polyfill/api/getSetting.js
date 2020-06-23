@@ -1,3 +1,4 @@
+import authSetting from "../authSetting";
 /**
  *
  * https://developers.weixin.qq.com/miniprogram/dev/api/open-api/setting/wx.getSetting.html
@@ -10,30 +11,12 @@ export default function getSetting({
   complete,
 }) {
   const result = {
-    authSetting: authSettingCreator(),
+    authSetting,
     subscriptionsSetting: subscriptionsSettingCreator(),
   };
   // TODO 暂时不会fail
   success && success(result);
   complete && complete();
-}
-
-/**
- * https://developers.weixin.qq.com/miniprogram/dev/api/open-api/setting/AuthSetting.html
- *
- */
-function authSettingCreator() {
-  return {
-    ["scope.userInfo"]: false,
-    ["scope.userLocation"]: false,
-    ["scope.address"]: false,
-    ["scope.invoiceTitle"]: false,
-    ["scope.invoice"]: false,
-    ["scope.werun"]: false,
-    ["scope.record"]: false,
-    ["scope.writePhotosAlbum"]: false,
-    ["scope.camera"]: false,
-  };
 }
 
 function subscriptionsSettingCreator() {
