@@ -1,7 +1,8 @@
-// #ifdef h5-weixin
-import "./uni-polyfill";
-// #endif
 import Vue from "vue";
+// #ifdef H5-WEIXIN
+import { injectComponent } from "./uni-polyfill";
+injectComponent(Vue);
+// #endif
 import App from "./App";
 Vue.config.productionTip = false;
 Vue.config.devTools = process.env.NODE_ENV !== "production";

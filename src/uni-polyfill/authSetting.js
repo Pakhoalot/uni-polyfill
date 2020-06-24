@@ -3,7 +3,6 @@
  *
  */
 const authSetting = {};
-// export default authSetting;
 
 const potocol = {
   scope: {
@@ -42,3 +41,5 @@ function flatten(obj, depth, maxDepth) {
 }
 
 const authList = flatten(potocol, 0, 2);
+
+export default authSetting;

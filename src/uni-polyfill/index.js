@@ -17,9 +17,14 @@
  * 详情可以看一下这篇文章https://blog.csdn.net/qq_39985511/article/details/82698142
  *
  */
-import wx from "./libs/js-sdk";
 import { promisify } from "@dcloudio/uni-h5/src/core/helpers/promise";
+import querystring from "query-string";
+import wx from "./libs/js-sdk";
+import store from "./store";
+import authSetting from "./authSetting";
 import login from "./api/login";
+import checkSession from "./api/checkSession";
+import getUserInfo from "./api/getUserInfo";
 import getSetting from "./api/getSetting";
 import openSetting from "./api/openSetting";
 import setClipboardData from "./api/setClipboardData";
@@ -27,14 +32,33 @@ import getClipboardData from "./api/getClipboardData";
 import openDocument from "./api/openDocument";
 import saveImageToPhotosAlbum from "./api/saveImageToPhotosAlbum";
 import { voidImplementation } from "./msg";
-import { warn } from "./logger";
+import { warn, log } from "./logger";
 
-import { nonceStr, timestamp, signature } from "../mock";
+import { nonceStr, timestamp, signature, appId } from "../mock";
 console.log(wx);
 
+/**
+ * 初始化
+ *
+ */
+// 初始化authSetting 并赋值到仓库
+store.set("authSetting", authSetting);
+/**
+ * login接口是跳转授权页再跳转回来, 成功后url上会带有code和State.
+ * 在所有代码加载前直接初始化
+ *
+ */
+const { query, url } = querystring.parseUrl(window.location.href);
+if (query.code) {
+  store.set("code", query.code);
+}
+/**
+ *
+ *
+ */
 wx.config({
   debug: true, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
-  appId: "wx073dfc91d230b984", // 必填，公众号的唯一标识
+  appId, // 必填，公众号的唯一标识
   timestamp, // 必填，生成签名的时间戳
   nonceStr, // 必填，生成签名的随机串
   signature, // 必填，签名
@@ -45,11 +69,10 @@ wx.ready(() => {
   wx.checkJsApi({
     jsApiList: ["scanQRCode"], // 需要检测的JS接口列表，所有JS接口列表见附录2,
     success: function(res) {
-      console.log(res);
+      log(res);
     },
   });
 });
-
 
 function navigateToMiniProgram() {
   warn(voidImplementation("navigateToMiniProgram"));
@@ -62,17 +85,17 @@ function navigateToMiniProgram() {
 const scanCode = wx.scanQRCode;
 
 const potocol = {
+  login,
+  checkSession,
+  getUserInfo,
+  getSetting,
+  openSetting,
+  openDocument,
+  navigateToMiniProgram,
+  saveImageToPhotosAlbum,
   scanCode,
   setClipboardData,
   getClipboardData,
-  getSetting,
-  openSetting,
-  navigateToMiniProgram,
-  openDocument,
-  saveImageToPhotosAlbum,
-  login,
-  getUserInfo,
-  authorize
 };
 
 for (const method in potocol) {
@@ -80,5 +103,13 @@ for (const method in potocol) {
     value: promisify(method, potocol[method]),
     writable: false,
     configurable: false,
+  });
+}
+
+export function injectComponent(vue) {
+  const oriButton = vue.component("VUniButton");
+  console.log(oriButton);
+  vue.component("VUniButton", {
+    ...oriButton,
   });
 }

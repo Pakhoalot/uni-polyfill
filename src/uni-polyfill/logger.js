@@ -9,9 +9,12 @@ export function info(...args) {
 export function log(...args) {
   if (isDev) console.log("[uni-polyfill]", ...args);
 }
-
+export function error(...args) {
+  if (isDev) console.error("[uni-polyfill]", ...args);
+}
 export default {
   warn,
   info,
   log,
+  error,
 }
