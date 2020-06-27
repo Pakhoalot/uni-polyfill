@@ -33,7 +33,7 @@ import openDocument from "./api/openDocument";
 import saveImageToPhotosAlbum from "./api/saveImageToPhotosAlbum";
 import { voidImplementation } from "./msg";
 import { warn, log } from "./logger";
-
+import { Button } from "./components";
 import { nonceStr, timestamp, signature, appId } from "../mock";
 console.log(wx);
 
@@ -107,9 +107,5 @@ for (const method in potocol) {
 }
 
 export function injectComponent(vue) {
-  const oriButton = vue.component("VUniButton");
-  console.log(oriButton);
-  vue.component("VUniButton", {
-    ...oriButton,
-  });
+  vue.component("VUniButton", Button);
 }

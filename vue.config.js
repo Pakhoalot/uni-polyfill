@@ -29,8 +29,10 @@ module.exports = {
     resolve: {
       // 为了引入uniapp内置的promisify, 只能通过引用改写uni-shared引用到uni-h5/src目录下的shared了
       alias: {
-        "uni-shared": "@dcloudio/uni-h5/src/shared"
-      }
+        "uni-shared": "@dcloudio/uni-h5/src/shared",
+        "uni-components": "@dcloudio/uni-h5/src/core/view/components",
+        "uni-mixins": "@dcloudio/uni-h5/src/core/view/mixins",
+      },
     },
   },
   lintOnSave: false,

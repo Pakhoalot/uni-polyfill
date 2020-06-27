@@ -15,7 +15,9 @@ export const appId = "wx073dfc91d230b984";
 export const appsecret = "cd50a588f0bfd68688746897323cc8d4";
 
 export function getUserInfoByCode(code) {
-  return Promise.resolve(`{"openid":"okpzgvstPOf9prPn8YG-v1C9nDyo","nickname":"梁伯豪","sex":1,"language":"zh_CN","city":"佛山","province":"广东","country":"中国","headimgurl":"http:\/\/thirdwx.qlogo.cn\/mmopen\/vi_32\/zY9WwlZ7M9Yho2VT1xpjzuPdpOHonsatq5sMHIWh84ciahL4un6xciauXd2oCn2ferGTGqrmiaIcAMPj93Z8GN0lA\/132","privilege":[]}`);
+  return Promise.resolve(
+    `{"openid":"okpzgvstPOf9prPn8YG-v1C9nDyo","nickname":"梁伯豪","sex":1,"language":"zh_CN","city":"佛山","province":"广东","country":"中国","headimgurl":"http://thirdwx.qlogo.cn/mmopen/vi_32/zY9WwlZ7M9Yho2VT1xpjzuPdpOHonsatq5sMHIWh84ciahL4un6xciauXd2oCn2ferGTGqrmiaIcAMPj93Z8GN0lA/132","privilege":[]}`
+  );
 }
 
 const wxGetUserInfoReturnsPotocol = {
