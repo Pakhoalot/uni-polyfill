@@ -107,5 +107,6 @@ for (const method in potocol) {
 }
 
 export function injectComponent(vue) {
+  console.log(Button);
   vue.component("VUniButton", Button);
 }
